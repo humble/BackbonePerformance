@@ -4,7 +4,6 @@ class AppRouter extends Backbone.Router {
     // this._preventPageReload();
     this.chance = new Chance();
     this.friends = new Friends();
-    this.friends.addFriends(1000);
     this.timers = new Timers();
     this.friendFilter = new FriendFilter();
   }

@@ -1,6 +1,11 @@
 class FriendIndexView extends Backbone.View {
   initialize(options) {
     this.timers = options.timers;
+    this.listenTo(this.model, 'change:friendCount', this.addFriends.bind(this));
+  }
+
+  addFriends() {
+    this.collection.addFriends(this.model.get('friendCount'));
   }
 
   addFriendList() {

@@ -1,6 +1,7 @@
 class FriendListView extends Backbone.View {
-  initialize() {
+  initialize(options) {
     this.listenTo(this.collection, 'add', this.addFriend);
+    this.listenTo(this.collection, 'remove', this.removeFriend);
   }
 
   addFriend(friend) {
@@ -9,6 +10,10 @@ class FriendListView extends Backbone.View {
     }
     let friendItemView = new FriendItemView({model: friend});
     this.$friendList.append(friendItemView.render().$el);
+  }
+
+  removeFriend(friend) {
+
   }
 
   render() {
@@ -24,6 +29,7 @@ FriendListView.prototype.template = _.template(`
     <div class="cell">Friend Name</div>
     <div class="cell">Gender</div>
     <div class="cell">Birthday</div>
+    <div class="cell">Say Hi</div>
   </div>
   <div id="friend-list" class="scrollable"></div>
 `);

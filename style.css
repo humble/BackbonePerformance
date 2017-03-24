@@ -4,7 +4,6 @@ body {
 }
 
 .base {
-  display: flex;
   width: 900px;
   padding: 20px;
   margin: 20px auto;
@@ -15,6 +14,18 @@ body {
   border: 2px solid rosybrown;
 }
 
+.friend-index {
+  display: flex;
+  width: 100%;
+}
+
+.friends-filter {
+  padding: 10px;
+}
+
+h3 {
+
+}
 .left {
   width: 250px;
 }
@@ -40,7 +51,7 @@ img {
 
 .cell {
   display: inline-block;
-  width: 150px;
+  width: 100px;
   padding: 20px;
 }
 
@@ -56,7 +67,7 @@ img {
 .scrollable {
   width: 100%;
   overflow-y: scroll;
-  height: 70vh;
+  height: 50vh;
 }
 
 .button {
