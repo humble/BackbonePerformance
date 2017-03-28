@@ -32,10 +32,10 @@ class FriendItemView extends Backbone.View {
 FriendItemView.prototype.className = 'friend-item';
 FriendItemView.prototype.events = { 'click .wink': 'wink' };
 FriendItemView.prototype.template = _.template(`
-  <div class="row" data-gender="<%- friend.get('gender') %>">
+  <div class="row" data-gender="<%- friend.get('gender') %>" data-month="<%- friend.get('birthday').getMonth() %>">
     <div class="cell"><%- friend.get('name') %></div>
     <div class="cell"><%- friend.get('gender') %></div>
-    <div class="cell"><%- friend.get('birthday') %></div>
+    <div class="cell birthday"><%- friend.get('birthday').toDateString() %></div>
     <div class="cell"><a href="#" class="button wink">Wink</a></div>
   </div>
 `);

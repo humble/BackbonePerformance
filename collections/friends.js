@@ -8,7 +8,7 @@ class Friends extends Backbone.Collection {
       this.add({
         name: this.chance.first(),
         gender: this.chance.gender(),
-        birthday: this.chance.birthday({ string: true }),
+        birthday: this.chance.birthday(),
         friendFilter: this.friendFilter,
         timers: this.timers
       })

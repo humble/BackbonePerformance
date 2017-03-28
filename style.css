@@ -52,7 +52,7 @@ img {
 .cell {
   display: inline-block;
   width: 100px;
-  padding: 20px;
+  padding: 10px 20px;
 }
 
 .header {
@@ -95,4 +95,8 @@ img {
 
 .pink {
   background-color: pink;
+}
+
+.birthday {
+  width: 150px;
 }

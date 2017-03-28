@@ -7,7 +7,7 @@ class FriendIndexView extends Backbone.View {
     this.collection.addFriends(10000);
   }
 
-  resetFriends() {
+  resetHighlight() {
     this.model.set('highlightGender', false);
     this.$('.row').removeClass('pink');
     this.$('.friend-item').removeClass('pink');
@@ -26,9 +26,12 @@ class FriendIndexView extends Backbone.View {
   }
 
   viewHighlight() {
-    this.timers.add({name: 'viewHighlight'});
+    let femaleCount = this.collection.where({gender: "Female"}).length;
+    this.timers.add({name: 'viewHighlight', count: femaleCount});
     this.$('[data-gender="Female"]').addClass('pink');
-    this.timers.last().stop();
+    for (var i = 0; i < femaleCount; i++) {
+      this.timers.last().decrement();
+    }
   }
 
   rerenderHighlight() {
@@ -41,8 +44,51 @@ class FriendIndexView extends Backbone.View {
     if (!this.$friendList) {
       this.$friendList = this.$('#friends-list');
     }
-    this.friendListView = new FriendListView({collection: this.collection});
+    this.friendListView = new FriendListView({
+      collection: this.collection,
+      timers: this.timers
+    });
     this.$friendList.append(this.friendListView.render().$el);
+  }
+
+  collectionFilter() {
+    this.timers.add({name: 'filterCollection'});
+    const currentMonth = new Date().getMonth();
+    const toRemove = this.collection.filter(friend => {
+      return friend.get('birthday').getMonth() === currentMonth;
+    });
+    this.timers.last().set('count', toRemove.length);
+    this.collection.remove(toRemove);
+  }
+
+  viewFilter() {
+    const currentMonth = new Date().getMonth();
+    this.removed = this.collection.filter(friend => {
+      return friend.get('birthday').getMonth() === currentMonth;
+    });
+    this.timers.add({name: 'viewFilter', count: this.removed.length});
+    this.$(`[data-month="${currentMonth}"]`).remove();
+    for (var i = 0; i < this.removed.length; i++) {
+      this.timers.last().decrement();
+    }
+  }
+
+  rerenderFilter() {
+    const currentMonth = new Date().getMonth();
+    this.removed = this.collection.filter(friend => {
+      return friend.get('birthday').getMonth() === currentMonth;
+    });
+    this.timers.add({name: 'rerenderFilter'})
+    this.friendListView.rerenderFriendsWithFilter(currentMonth);
+    this.timers.last().stop();
+  }
+
+  resetBirthday() {
+    this.friendListView.resetBirthday(this.removed);
+    if (this.removed) {
+      this.removed.forEach(friend => this.friendListView.addFriend(friend));
+      this.removed = null;
+    }
   }
 
   addFilter() {
@@ -51,11 +97,15 @@ class FriendIndexView extends Backbone.View {
     }
     let friendFilterView = new FriendFilterView({
       addFriends: this.addFriends.bind(this),
-      resetFriends: this.resetFriends.bind(this),
+      resetHighlight: this.resetHighlight.bind(this),
       modelHighlight: this.modelHighlight.bind(this),
       rerenderHighlight: this.rerenderHighlight.bind(this),
       viewHighlight: this.viewHighlight.bind(this),
-      jqueryHighlight: this.jqueryHighlight.bind(this)
+      jqueryHighlight: this.jqueryHighlight.bind(this),
+      collectionFilter: this.collectionFilter.bind(this),
+      viewFilter: this.viewFilter.bind(this),
+      rerenderFilter: this.rerenderFilter.bind(this),
+      resetBirthday: this.resetBirthday.bind(this)
     });
     this.$filterView.append(friendFilterView.render().$el);
   }
