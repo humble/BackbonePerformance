@@ -1,19 +1,35 @@
 class FriendListView extends Backbone.View {
-  initialize(options) {
+  initialize() {
     this.listenTo(this.collection, 'add', this.addFriend);
     this.listenTo(this.collection, 'remove', this.removeFriend);
   }
 
+
   addFriend(friend) {
-    if (!this.$friendList) {
-      this.$friendList = this.$('#friend-list');
-    }
     let friendItemView = new FriendItemView({model: friend});
-    this.$friendList.append(friendItemView.render().$el);
+    this.getFriendList().append(friendItemView.render().$el);
+  }
+
+  rerenderFriendsWithHighlights() {
+    this.getFriendList().empty();
+    this.collection.each(friend => {
+      let friendItemView = new FriendItemView({model: friend});
+      if (friend.get('gender') === 'Female') {
+        friendItemView.$el.addClass('pink');
+      }
+      this.getFriendList().append(friendItemView.render().$el);
+    })
   }
 
   removeFriend(friend) {
 
+  }
+
+  getFriendList() {
+    if (!this.$friendList) {
+      this.$friendList = this.$('#friend-list');
+    }
+    return this.$friendList;
   }
 
   render() {

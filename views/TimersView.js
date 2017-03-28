@@ -5,7 +5,7 @@ class TimersView extends Backbone.View {
 
   addTimer(timer) {
     if (!this.$timers) {
-      this.$timers = this.$('#timers');
+      this.$timers = this.$('#timers-list');
     }
     let timerItemView = new TimerItemView({model: timer});
     this.$timers.append(timerItemView.render().$el);
@@ -21,6 +21,6 @@ class TimersView extends Backbone.View {
 TimersView.prototype.className = 'timer-list';
 TimersView.prototype.template = _.template(`
   <h2>Timers</h2>
-  <div id="timers"></div>
+  <div id="timers-list"></div>
   <img src="assets/hamblesweat.jpg">
 `);

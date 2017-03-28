@@ -71,11 +71,13 @@ img {
 }
 
 .button {
+  display: inline-block;
   padding: 5px;
   border-radius: 5px;
   color: white;
   text-decoration: none;
   background: rosybrown;
+  margin-right: 5px;
 }
 
 .button:hover {
@@ -83,4 +85,14 @@ img {
   background: white;
   color: rosybrown;
   box-shadow: 1px 1px 2px rosybrown;
+}
+
+#timers-list {
+  margin-bottom: 10px;
+  max-height: 45vh;
+  overflow-y: scroll;
+}
+
+.pink {
+  background-color: pink;
 }

@@ -1,11 +1,11 @@
 class AppRouter extends Backbone.Router {
-  initialize(options) {
-    this.$rootEl = options.$rootEl;
-    // this._preventPageReload();
-    this.chance = new Chance();
-    this.friends = new Friends();
-    this.timers = new Timers();
+  initialize({ $rootEl }) {
+    this.$rootEl = $rootEl;
     this.friendFilter = new FriendFilter();
+    this.friends = new Friends();
+    this.friends.friendFilter = this.friendFilter;
+    this.timers = new Timers();
+    this.friends.timers = this.timers;
   }
 
   baseView() {
@@ -36,26 +36,6 @@ class AppRouter extends Backbone.Router {
     this._currentView = view;
     this.baseView().$('#view').html(view.render().$el);
   }
-
-  // _preventPageReload() {
-  //   // Looks for anchor tags whose hrefs start with '/' and that don't include
-  //   // data-reload=1
-  //   this.$rootEl.on('click', "a[href^='/']:not([data-reload=1])", (e) => {
-  //     let current = $(e.currentTarget);
-  //     let href = current.attr('href');
-  //
-  //     // Allow shift+click for new tabs, etc.
-  //     if (!e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
-  //       e.preventDefault();
-  //
-  //       // Remove leading slashes and hash bangs (backward compatablility)
-  //       let url = href.replace(/^\//,'').replace('\#\!\/','');
-  //       this.navigate(url, { trigger: true });
-  //       // stop browser from redirecting.
-  //       return false;
-  //     }
-  //   });
-  // }
 }
 
 AppRouter.prototype.routes = {
