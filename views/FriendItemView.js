@@ -1,18 +1,13 @@
 class FriendItemView extends Backbone.View {
-  initialize() {
+  initialize({friendFilter}) {
     if (this.model.get('gender') === 'Female') {
-      this.listenTo(
-        this.model.get('friendFilter'),
-        'change:highlightGender',
-        this.pink.bind(this)
-      );
+      this.listenTo(friendFilter, 'change:highlightGender', this.pink.bind(this));
     }
   }
 
   pink(filter) {
     if (filter.get('highlightGender')) {
       this.$el.addClass('pink');
-      this.model.get('timers').last().decrement();
     } else {
       this.$el.removeClass('pink');
     }

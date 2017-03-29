@@ -3,9 +3,7 @@ class AppRouter extends Backbone.Router {
     this.$rootEl = $rootEl;
     this.friendFilter = new FriendFilter();
     this.friends = new Friends();
-    this.friends.friendFilter = this.friendFilter;
     this.timers = new Timers();
-    this.friends.timers = this.timers;
   }
 
   baseView() {

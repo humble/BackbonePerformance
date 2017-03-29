@@ -15,9 +15,9 @@ class FriendIndexView extends Backbone.View {
   }
 
   modelHighlight() {
-    let femaleCount = this.collection.where({gender: "Female"}).length;
-    this.timers.add({name: 'modelHighlight', count: femaleCount});
+    this.timers.add({name: 'modelHighlight'});
     this.model.set('highlightGender', true);
+    this.timers.last().stop();
   }
 
   jqueryHighlight() {
@@ -27,12 +27,9 @@ class FriendIndexView extends Backbone.View {
   }
 
   viewHighlight() {
-    let femaleCount = this.collection.where({gender: "Female"}).length;
-    this.timers.add({name: 'viewHighlight', count: femaleCount});
+    this.timers.add({name: 'viewHighlight'});
     this.$('[data-gender="Female"]').addClass('pink');
-    for (var i = 0; i < femaleCount; i++) {
-      this.timers.last().decrement();
-    }
+    this.timers.last().stop();
   }
 
   rerenderHighlight() {
@@ -45,10 +42,7 @@ class FriendIndexView extends Backbone.View {
     if (!this.$friendList) {
       this.$friendList = this.$('#friends-list');
     }
-    this.friendListView = new FriendListView({
-      collection: this.collection,
-      timers: this.timers
-    });
+    this.friendListView = new FriendListView({ collection: this.collection, model: this.model });
     this.$friendList.append(this.friendListView.render().$el);
   }
 
@@ -58,8 +52,8 @@ class FriendIndexView extends Backbone.View {
     const toRemove = this.collection.filter(friend => {
       return friend.get('birthday').getMonth() === currentMonth;
     });
-    this.timers.last().set('count', toRemove.length);
     this.collection.remove(toRemove);
+    this.timers.last().stop();
   }
 
   viewFilter() {
@@ -67,11 +61,9 @@ class FriendIndexView extends Backbone.View {
     this.removed = this.collection.filter(friend => {
       return friend.get('birthday').getMonth() === currentMonth;
     });
-    this.timers.add({name: 'viewFilter', count: this.removed.length});
+    this.timers.add({name: 'viewFilter'});
     this.$(`[data-month="${currentMonth}"]`).remove();
-    for (var i = 0; i < this.removed.length; i++) {
-      this.timers.last().decrement();
-    }
+    this.timers.last().stop();
   }
 
   rerenderFilter() {

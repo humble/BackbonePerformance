@@ -1,14 +1,13 @@
 class FriendListView extends Backbone.View {
-  initialize({ timers }) {
+  initialize() {
     this.friendItemViews = {};
     this.removedfriends = [];
-    this.timers = timers;
     this.listenTo(this.collection, 'add', this.addFriend);
     this.listenTo(this.collection, 'remove', this.removeFriend);
   }
 
   addFriend(friend) {
-    let friendItemView = new FriendItemView({model: friend});
+    let friendItemView = new FriendItemView({model: friend, friendFilter: this.model});
     this.friendItemViews[friend.cid] = friendItemView
     this.getFriendList().append(friendItemView.render().$el);
   }
@@ -16,7 +15,7 @@ class FriendListView extends Backbone.View {
   rerenderFriendsWithHighlights() {
     this.getFriendList().empty();
     this.collection.each(friend => {
-      let friendItemView = new FriendItemView({model: friend});
+      let friendItemView = new FriendItemView({model: friend, friendFilter: this.model});
       if (friend.get('gender') === 'Female') {
         friendItemView.$el.addClass('pink');
       }
@@ -28,11 +27,13 @@ class FriendListView extends Backbone.View {
     this.getFriendList().empty();
     this.collection.each(friend => {
       if (friend.get('birthday').getMonth() !== month) {
-        let friendItemView = new FriendItemView({model: friend});
+        let friendItemView = new FriendItemView({model: friend, friendFilter: this.model});
         this.getFriendList().append(friendItemView.render().$el);
       }
     })
   }
+
+  //iterate over all items and add pink class to female friends
 
   resetBirthday() {
     this.collection.add(this.removedfriends);
@@ -42,7 +43,6 @@ class FriendListView extends Backbone.View {
   removeFriend(friend) {
     this.friendItemViews[friend.cid].remove();
     this.removedfriends.push(friend);
-    this.timers.last().decrement();
   }
 
   getFriendList() {
