@@ -52,6 +52,13 @@ class FriendListView extends Backbone.View {
     return this.$friendList;
   }
 
+  remove() {
+    Object.values(this.friendItemViews).forEach(friendItemView => {
+      friendItemView.remove();
+    })
+    super.remove();
+  }
+
   render() {
     this.$el.html(this.template);
     this.collection.each(friend => this.addFriend(friend));

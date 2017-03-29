@@ -68,14 +68,14 @@ FriendFilterView.prototype.template = _.template(`
     <a href="#" class="button rerenderHighlight">Entire rerender</a>
     <a href="#" class="button jqueryHighlight">jQuery selectors</a>
     <a href="#" class="button viewHighlight">View selectors</a>
-    <a href="#" class="button modelHighlight">Backbone model listeners</a>
+    <a href="#" class="button modelHighlight">Model listeners</a>
     <a href="#" class="button" id="reset-highlight">Reset</a>
   </div>
   <div>
     <h3>Filtering Elements</h3>
     <a href="#" class="button rerenderFilter">Entire rerender</a>
     <a href="#" class="button viewFilter">jQuery selectors</a>
-    <a href="#" class="button collectionFilter">Backbone Collection Listener</a>
+    <a href="#" class="button collectionFilter">Collection Listener</a>
     <a href="#" class="button" id="reset-filter">Reset</a>
   </div>
 `);

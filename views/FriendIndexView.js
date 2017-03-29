@@ -1,6 +1,7 @@
 class FriendIndexView extends Backbone.View {
   initialize({ timers }) {
     this.timers = timers;
+    this.subViews = [];
   }
 
   addFriends() {
@@ -107,6 +108,7 @@ class FriendIndexView extends Backbone.View {
       rerenderFilter: this.rerenderFilter.bind(this),
       resetBirthday: this.resetBirthday.bind(this)
     });
+    this.subViews.push(friendFilterView);
     this.$filterView.append(friendFilterView.render().$el);
   }
 
@@ -115,7 +117,14 @@ class FriendIndexView extends Backbone.View {
       this.$timerView = this.$('#timers');
     }
     let timersView = new TimersView({ collection: this.timers });
+    this.subViews.push(timersView);
     this.$timerView.append(timersView.render().$el);
+  }
+
+  remove() {
+    this.subViews.forEach(view => view.remove());
+    this.friendListView.remove();
+    super.remove();
   }
 
   render() {

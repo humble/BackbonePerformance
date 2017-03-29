@@ -100,3 +100,15 @@ img {
 .birthday {
   width: 150px;
 }
+
+.tab {
+  text-decoration: none;
+  color: saddlebrown;
+  padding: 5px;
+}
+
+.navigation {
+  width: 900px;
+  margin: auto;
+  margin-bottom: -15px;
+}

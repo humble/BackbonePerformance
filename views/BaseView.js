@@ -5,11 +5,11 @@ class BaseView extends Backbone.View {
   }
 }
 
-BaseView.prototype.className = 'base';
+BaseView.prototype.className = '';
 BaseView.prototype.template = _.template(`
-  <div id="navigation">
-    <a href="#/hamble">Secret<a>
-    <a href="#/">Friends<a>
+  <div id="navigation" class="navigation">
+    <a href="#/hamble" class="tab">Secret</a> |
+    <a href="#/" class="tab">Friends</a>
   </div>
-  <div id="view"></div>
+  <div id="view" class="base"></div>
 `);
