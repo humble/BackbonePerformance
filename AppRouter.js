@@ -8,7 +8,7 @@ class AppRouter extends Backbone.Router {
 
   baseView() {
     if (!this._baseView) {
-      this._baseView = new BaseView();
+      this._baseView = new BaseView({ model: this.friendFilter });
       this.$rootEl.html(this._baseView.$el);
       this._baseView.render();
     }
@@ -30,7 +30,13 @@ class AppRouter extends Backbone.Router {
   }
 
   _swapView(view) {
-    if (this._currentView) this._currentView.remove();
+    if (this._currentView) {
+      if (this.friendFilter.get('removeChildren')) {
+        this._currentView.removePlus();
+      } else {
+        this._currentView.remove();
+      }
+    }
     this._currentView = view;
     this.baseView().$('#view').html(view.render().$el);
   }

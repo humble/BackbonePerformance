@@ -7,6 +7,7 @@ class TimerItemView extends Backbone.View {
     if (this.model.get('end')) {
       this.$el.html(this.template({ timer: this.model }));
     }
+
     return this;
   }
 }

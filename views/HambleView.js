@@ -1,4 +1,9 @@
 class HambleView extends Backbone.View {
+  // for demonstration purposes.
+  removePlus() {
+    super.remove();
+  }
+
   render() {
     this.$el.html(this.template);
     return this;
@@ -6,6 +11,4 @@ class HambleView extends Backbone.View {
 }
 
 HambleView.prototype.className = 'hamble';
-HambleView.prototype.template = _.template(`
-  <img src="assets/hamblewink.jpg">
-`);
+HambleView.prototype.template = _.template(`<img src="assets/hamblewink.jpg">`);

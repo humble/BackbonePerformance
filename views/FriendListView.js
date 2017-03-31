@@ -6,29 +6,35 @@ class FriendListView extends Backbone.View {
     this.listenTo(this.collection, 'remove', this.removeFriend);
   }
 
-  addFriend(friend) {
-    let friendItemView = new FriendItemView({model: friend, friendFilter: this.model});
-    this.friendItemViews[friend.cid] = friendItemView
-    this.getFriendList().append(friendItemView.render().$el);
+  getFriendList() {
+    if (!this.$friendList) this.$friendList = this.$('#friend-list');
+
+    return this.$friendList;
   }
 
+  //rerender model
   rerenderFriendsWithHighlights() {
     this.getFriendList().empty();
     this.collection.each(friend => {
-      let friendItemView = new FriendItemView({model: friend, friendFilter: this.model});
-      if (friend.get('gender') === 'Female') {
-        friendItemView.$el.addClass('pink');
-      }
-      this.getFriendList().append(friendItemView.render().$el);
+      let friendView = new FriendItemView({
+        model: friend,
+        friendFilter: this.model
+      });
+      if (friend.get('gender') === 'Female') friendView.$el.addClass('pink');
+      this.getFriendList().append(friendView.render().$el);
     })
   }
 
+  //rerender collection
   rerenderFriendsWithFilter(month) {
     this.getFriendList().empty();
     this.collection.each(friend => {
       if (friend.get('birthday').getMonth() !== month) {
-        let friendItemView = new FriendItemView({model: friend, friendFilter: this.model});
-        this.getFriendList().append(friendItemView.render().$el);
+        let friendView = new FriendItemView({
+          model: friend,
+          friendFilter: this.model
+        });
+        this.getFriendList().append(friendView.render().$el);
       }
     })
   }
@@ -40,28 +46,30 @@ class FriendListView extends Backbone.View {
     this.removedFriends = [];
   }
 
+  addFriend(friend) {
+    let friendItemView = new FriendItemView({
+      model: friend,
+      friendFilter: this.model
+    });
+    this.friendItemViews[friend.cid] = friendItemView;
+    this.getFriendList().append(friendItemView.render().$el);
+  }
+
   removeFriend(friend) {
     this.friendItemViews[friend.cid].remove();
     this.removedfriends.push(friend);
   }
 
-  getFriendList() {
-    if (!this.$friendList) {
-      this.$friendList = this.$('#friend-list');
-    }
-    return this.$friendList;
-  }
-
+  //zombie views
   remove() {
-    Object.values(this.friendItemViews).forEach(friendItemView => {
-      friendItemView.remove();
-    })
+    Object.values(this.friendItemViews).forEach(subView => subView.remove())
     super.remove();
   }
 
   render() {
     this.$el.html(this.template);
     this.collection.each(friend => this.addFriend(friend));
+
     return this;
   }
 }

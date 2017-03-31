@@ -4,9 +4,7 @@ class TimersView extends Backbone.View {
   }
 
   addTimer(timer) {
-    if (!this.$timers) {
-      this.$timers = this.$('#timers-list');
-    }
+    if (!this.$timers) this.$timers = this.$('#timers-list');
     let timerItemView = new TimerItemView({model: timer});
     this.$timers.append(timerItemView.render().$el);
   }
@@ -14,6 +12,7 @@ class TimersView extends Backbone.View {
   render() {
     this.$el.html(this.template);
     this.collection.each(timer => this.addTimer(timer));
+
     return this;
   }
 }
