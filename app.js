@@ -1,10 +1,11 @@
 function init() {
   let $rootEl = $('#app');
   new AppRouter({ $rootEl });
-  Backbone.history.start({
-    pushState: false,
-    root: 'Users/irenefoelschow/BackboneExperiment/index.html'
-  });
+
+  let historyOptions = { pushState: false };
+  const rootUrl = window.location.href.split('///');
+  if (rootUrl.length > 1) historyOptions.root = rootUrl[1];
+  Backbone.history.start(historyOptions);
 }
 
 init();

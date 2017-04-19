@@ -79,6 +79,8 @@ class FriendIndexView extends Backbone.View {
     }
   }
 
+
+
   /// avoid zombie views
   removePlus() {
     this.subViews.forEach(view => view.remove());
@@ -109,10 +111,6 @@ class FriendIndexView extends Backbone.View {
 
     return this;
   }
-
-  /// run and reset *100 for everything but entire rerender and return timer average.
-  /// do Luke's suggestion
-
 }
 
 FriendIndexView.prototype.className = 'friend-index';

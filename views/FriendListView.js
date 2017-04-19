@@ -39,8 +39,6 @@ class FriendListView extends Backbone.View {
     })
   }
 
-  //iterate over all items and add pink class to female friends
-
   resetBirthday() {
     this.collection.add(this.removedfriends);
     this.removedFriends = [];
