@@ -5,7 +5,7 @@ class FriendIndexView extends Backbone.View {
   }
 
   addFriends() {
-    this.collection.addFriends(10000);
+    this.collection.addFriends(1000);
   }
 
   // model study
@@ -57,7 +57,7 @@ class FriendIndexView extends Backbone.View {
 
   viewFilter() {
     const currentMonth = new Date().getMonth();
-    this.removed = getRemoved(currentMonth);
+    this.removed = this.getRemoved(currentMonth);
     this.timers.add({name: 'View Filter'});
     this.$(`[data-month="${currentMonth}"]`).remove();
     this.timers.last().stop();
@@ -66,7 +66,7 @@ class FriendIndexView extends Backbone.View {
   collectionFilter() {
     this.timers.add({name: 'Collection Filter'});
     const currentMonth = new Date().getMonth();
-    const toRemove = getRemoved(currentMonth);
+    const toRemove = this.getRemoved(currentMonth);
     this.collection.remove(toRemove);
     this.timers.last().stop();
   }

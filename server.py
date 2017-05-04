@@ -8,7 +8,7 @@ ServerClass  = BaseHTTPServer.HTTPServer
 Protocol     = "HTTP/1.0"
 
 port = 5000
-server_address = ('127.0.0.1', port)
+server_address = ('', port)
 
 HandlerClass.protocol_version = Protocol
 httpd = ServerClass(server_address, HandlerClass)
