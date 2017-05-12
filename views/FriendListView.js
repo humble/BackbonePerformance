@@ -61,6 +61,7 @@ class FriendListView extends Backbone.View {
   //zombie views
   remove() {
     Object.values(this.friendItemViews).forEach(subView => subView.remove())
+    this.friendItemViews = {};
     super.remove();
   }
 

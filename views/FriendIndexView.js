@@ -84,7 +84,9 @@ class FriendIndexView extends Backbone.View {
   /// avoid zombie views
   removePlus() {
     this.subViews.forEach(view => view.remove());
+    this.subViews = [];
     this.friendListView.remove();
+    this.friendListView = null;
     super.remove();
   }
 
